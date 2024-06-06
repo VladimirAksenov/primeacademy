@@ -3,22 +3,21 @@ package com.example.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @Entity
-public class Task {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    private String login;
 
-    private String description;
+    private String password;
 
-    private boolean done;
 }
