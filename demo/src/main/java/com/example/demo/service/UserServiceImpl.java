@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -18,38 +17,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
     @Override
-
     public User createUser(User user) {
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         return userRepository.save(user);
-
-
-
     }
-
-
 
     @Override
-
     public User getCurrentUser() {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-
-
         org.springframework.security.core.userdetails.User principal =
-
                 (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
-
         return userRepository.findByLogin(principal.getUsername())
-
-                .orElseThrow(() -> new IllegalArgumentException("user not found"));
-
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
-
 }

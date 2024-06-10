@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Task;
+import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +15,18 @@ import java.util.Optional;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    @Autowired
+    private UserService userService;
 
     @PostMapping
-    public Task create(@RequestBody Task task) {
-        return taskRepository.save(task);
+    public ResponseEntity<Task> create(@RequestBody Task task) {
+        User currentUser = userService.getCurrentUser();
+        task.setUser(currentUser);
+        Task savedTask = taskRepository.save(task);
+        return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -32,13 +38,6 @@ public class TaskController {
     public ResponseEntity<Task> getById(@PathVariable Long id) {
         Optional<Task> taskOptional = taskRepository.findById(id);
         return taskOptional.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        /*
-        if (task.isPresent()) {
-            return new ResponseEntity<>(task.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-         */
     }
 
     @PutMapping("/{id}")
