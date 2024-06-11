@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -88,5 +89,11 @@ public class TaskController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/me")
+    public List<Task> getCurrentUserTasks() {
+        User currentUser = userService.getCurrentUser();
+        return taskRepository.findTasksByUser(currentUser);
     }
 }
