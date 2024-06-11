@@ -32,6 +32,6 @@ public class UserController {
     @GetMapping("/me/tasks")
     public List<Task> getCurrentUserTasks() {
         User currentUser = userService.getCurrentUser();
-        return taskRepository.findByUser(currentUser);
+        return taskRepository.findTasksByUser(currentUser);
     }
 }
