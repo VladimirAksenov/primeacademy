@@ -25,8 +25,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     }
 
-
-
     protected void handle(HttpServletRequest request,
                           HttpServletResponse response, Authentication authentication) throws IOException {
 
@@ -34,8 +32,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.getWriter().flush();
         response.getWriter().close();
     }
-
-
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {
 
