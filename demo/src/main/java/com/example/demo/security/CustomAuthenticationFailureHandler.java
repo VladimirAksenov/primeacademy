@@ -12,9 +12,7 @@ import java.io.IOException;
 
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-
     @Override
-
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
@@ -24,6 +22,5 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         response.getWriter().write("check login password");
         response.getWriter().flush();
         response.getWriter().close();
-
     }
 }
